@@ -1,0 +1,4 @@
+flask==3.0.2
+yfinance==0.2.36
+pandas==2.2.1
+python-dotenv==1.0.1 

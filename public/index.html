@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TickerTok - Stock Market Analysis & Tools for Investors</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Sign-In SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Apple Sign-In SDK -->
+    <script type="text/javascript" src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+    <meta name="appleid-signin-client-id" content="[YOUR_APPLE_CLIENT_ID]">
+    <meta name="appleid-signin-scope" content="name email">
+    <meta name="appleid-signin-redirect-uri" content="[YOUR_REDIRECT_URI]">
+    <meta name="appleid-signin-state" content="[STATE]">
+    <meta name="appleid-signin-use-popup" content="true">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="#" class="logo">TickerTok</a>
+            <div class="nav-links">
+                <a href="#">Stock Analysis</a>
+                <a href="#">Market News</a>
+                <a href="#">Market Data</a>
+                <a href="#">Dividends</a>
+                <a href="#">ETFs</a>
+                <a href="#">Earnings</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="search-bar">
+                <input type="text" placeholder="Search for Symbols, analysts, keywords">
+                <i class="fas fa-search"></i>
+            </div>
+            <button class="login-btn">Log in</button>
+            <button class="signup-btn">Create Free Account</button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Log in to TickerTok</h2>
+            <div class="login-options">
+                <button class="social-login google">
+                    <i class="fab fa-google"></i>
+                    Continue with Google
+                </button>
+                <button class="social-login apple">
+                    <i class="fab fa-apple"></i>
+                    Continue with Apple
+                </button>
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                <form class="email-login">
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Password" required>
+                    <button type="submit">Log in</button>
+                </form>
+                <div class="login-footer">
+                    <a href="#">Forgot password?</a>
+                    <p>Don't have an account? <a href="#" class="signup-link">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content with Sidebar -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Investing Groups</h3>
+                <ul>
+                    <li><a href="#">Top Rated Groups</a></li>
+                    <li><a href="#">Free Trials</a></li>
+                    <li><a href="#">Dividend Investing</a></li>
+                    <li><a href="#">Value Investing</a></li>
+                    <li><a href="#">Options Trading</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h3>Portfolios</h3>
+                <ul>
+                    <li><a href="#">My Portfolio</a></li>
+                    <li><a href="#">Top Portfolios</a></li>
+                    <li><a href="#">Portfolio Health Check</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h3>Find & Compare</h3>
+                <ul>
+                    <li><a href="#">Stock Screener</a></li>
+                    <li><a href="#">ETF Screener</a></li>
+                    <li><a href="#">Stock Comparisons</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Market Overview Section -->
+            <section class="market-overview">
+                <h2>Market Overview</h2>
+                <div class="market-indices">
+                    <div class="index-card">
+                        <h3>Dow Futures</h3>
+                        <div class="price">Loading...</div>
+                        <div class="change">Loading...</div>
+                        <canvas id="dowChart"></canvas>
+                    </div>
+                    <div class="index-card">
+                        <h3>S&P 500</h3>
+                        <div class="price">Loading...</div>
+                        <div class="change">Loading...</div>
+                        <canvas id="spxChart"></canvas>
+                    </div>
+                    <div class="index-card">
+                        <h3>Nasdaq</h3>
+                        <div class="price">Loading...</div>
+                        <div class="change">Loading...</div>
+                        <canvas id="nasdaqChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top Gainers Section -->
+            <section class="market-movers">
+                <h2>Top Gainers</h2>
+                <div class="movers-grid" id="topGainers">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Top Losers Section -->
+            <section class="market-movers">
+                <h2>Top Losers</h2>
+                <div class="movers-grid" id="topLosers">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Latest News Section -->
+            <section class="latest-news">
+                <h2>Latest News</h2>
+                <div class="news-grid">
+                    <article class="news-card">
+                        <h3>Thursday's Economic Calendar</h3>
+                        <p>Latest economic events and their impact on markets...</p>
+                    </article>
+                    <article class="news-card">
+                        <h3>Market Analysis: Tech Sector Outlook</h3>
+                        <p>Analysis of current tech sector trends and future predictions...</p>
+                    </article>
+                    <article class="news-card">
+                        <h3>Earnings Season Preview</h3>
+                        <p>What to expect from upcoming earnings reports...</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Trending Analysis Section -->
+            <section class="trending-analysis">
+                <h2>Trending Analysis</h2>
+                <div class="analysis-grid">
+                    <article class="analysis-card">
+                        <div class="author-info">
+                            <img src="/assets/images/placeholder-avatar.jpg" alt="Author">
+                            <span>John Doe</span>
+                        </div>
+                        <h3>Top 5 Dividend Stocks for 2024</h3>
+                        <p>Analysis of high-yield dividend stocks with growth potential...</p>
+                    </article>
+                    <article class="analysis-card">
+                        <div class="author-info">
+                            <img src="/assets/images/placeholder-avatar.jpg" alt="Author">
+                            <span>Jane Smith</span>
+                        </div>
+                        <h3>Tech Sector Deep Dive</h3>
+                        <p>Comprehensive analysis of technology sector opportunities...</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>About TickerTok</h4>
+                <p>Your trusted source for stock market analysis and investment insights.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#">Stock Analysis</a></li>
+                    <li><a href="#">Market News</a></li>
+                    <li><a href="#">Dividends</a></li>
+                    <li><a href="#">ETFs</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 TickerTok. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html> 
